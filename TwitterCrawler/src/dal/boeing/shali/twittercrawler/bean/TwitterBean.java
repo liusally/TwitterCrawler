@@ -24,7 +24,7 @@ public class TwitterBean {
 	private String profile_image_url_https;
 	@Column(name="iso_language_code")
 	private String iso_language_code;
-	@Column(name="entities")
+	@Column(columnDefinition = "LONGBLOB") 
 	private String entities;
 	@Column(name="to_user_id")
 	private long to_user_id;
