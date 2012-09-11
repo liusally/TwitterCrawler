@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+import org.hibernate.annotations.Table;
+
 /**   
  * Twitter is created on 2012-08-08 4:27:12 PM  
  * @author: Sally  

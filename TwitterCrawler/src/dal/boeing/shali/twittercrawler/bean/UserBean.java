@@ -3,6 +3,8 @@ package dal.boeing.shali.twittercrawler.bean;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+import org.hibernate.annotations.Table;
+
 /**   
  * UserBean is created on 2012-08-21 3:32:39 PM  
  * @author: Sally  

@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import org.hibernate.annotations.Table;
+
 /**   
  * RelationBean is created on 2012-08-22 1:38:11 PM  
  * @author: Sally  
