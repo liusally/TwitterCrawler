@@ -4,6 +4,7 @@ package dal.boeing.shali.twittercrawler.utils;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
 
+import dal.boeing.shali.twittercrawler.bean.RelatBean;
 import dal.boeing.shali.twittercrawler.bean.RelationBean;
 import dal.boeing.shali.twittercrawler.bean.TwitterBean;
 import dal.boeing.shali.twittercrawler.bean.UserBean;
@@ -22,6 +23,7 @@ public class HibernateUtil {
 								.addAnnotatedClass(TwitterBean.class)
 								.addAnnotatedClass(UserBean.class)
 								.addAnnotatedClass(RelationBean.class)
+								.addAnnotatedClass(RelatBean.class)
 								.buildSessionFactory();
 
 		} catch (Throwable ex) {
