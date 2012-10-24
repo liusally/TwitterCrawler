@@ -13,6 +13,7 @@ import twitter4j.TwitterException;
 import twitter4j.json.DataObjectFactory;
 import dal.boeing.shali.twittercrawler.bean.TwitterBean;
 import dal.boeing.shali.twittercrawler.database.TwitterDao;
+import dal.boeing.shali.twittercrawler.utils.TwitterApiUtil;
 
 /**   
  * TwitterCrawler is created on 2012-08-07 5:59:13 PM  
@@ -58,6 +59,8 @@ public class TwitterCrawler extends Thread {
 					}
 				}
 				
+				TwitterApiUtil tutil = new TwitterApiUtil();
+				
 				for (Tweet tweet : tweets) {
 					HashtagEntity entity;
 					String tweetJson = DataObjectFactory.getRawJSON(tweet);
@@ -72,9 +75,19 @@ public class TwitterCrawler extends Thread {
 					bean.setGeo(geo);
 					bean.setId(tweet.getId());
 					long reply_to = 0;
-					if (jsonObject.get("in_reply_to_status_id") != null) reply_to = jsonObject.getLong("in_reply_to_status_id");
+					Object obj = null;
+					if (!jsonObject.isNullObject())
+						obj = jsonObject.get("in_reply_to_status_id");
+					if (obj != null && !obj.equals("null")) {
+						reply_to = jsonObject.getLong("in_reply_to_status_id");
+						if (reply_to > 0) {
+							tutil.retrieveTwitterById(reply_to);
+							bean.setReply_cached(1);
+						}
+					}
 					bean.setIn_reply_to_status_id(reply_to);
-					bean.setEntities(jsonObject.getJSONObject("entities").toString());
+					if (!jsonObject.isNullObject())
+						bean.setEntities(jsonObject.getJSONObject("entities").toString());
 					bean.setIso_language_code(tweet.getIsoLanguageCode());
 					bean.setMetadata(bean.getMetadata());
 					bean.setProfile_image_url(tweet.getProfileImageUrl());
@@ -85,16 +98,16 @@ public class TwitterCrawler extends Thread {
 					dao.save(bean);
 				}
 			} catch (TwitterException e) {
-				// TODO Auto-generated catch block
 				System.err.println(new Date().toLocaleString());
-				e.printStackTrace();
-				if (e.exceededRateLimitation())
+				if (e.exceededRateLimitation()) {
+					System.err.println("TwitterCrawler exceed rate limit!");
 					try {
 						Thread.sleep(500000);
 					} catch (InterruptedException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
+				}
 			} 
 			page++;
 		}

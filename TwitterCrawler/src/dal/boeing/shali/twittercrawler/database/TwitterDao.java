@@ -157,6 +157,24 @@ public class TwitterDao {
 		return tweets;
 	}
 	
+	//tweets that reply crawling is not cached
+	public List<TwitterBean> getNonReplyCachedTweets() {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		List<TwitterBean> tweets = new ArrayList<TwitterBean>();
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+			tweets = session.createQuery("from TwitterBean where reply_cached is null and in_reply_to_status_id>0").list();
+			transaction.commit();
+		} catch (HibernateException e) {
+			transaction.rollback();
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return tweets;
+	}
+	
 	public List<Long> selectExistFromUser() {
 		
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -174,8 +192,6 @@ public class TwitterDao {
 		}
 		return fromIds;
 	}
-	
-	
 	
 	public static void main(String[] args) {
 		TwitterDao dao = new TwitterDao();

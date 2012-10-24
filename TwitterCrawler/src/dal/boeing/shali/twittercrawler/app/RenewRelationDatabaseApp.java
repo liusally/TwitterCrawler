@@ -18,8 +18,8 @@ public class RenewRelationDatabaseApp {
 		int length = 1000;
 		int size = dao.getRelationSize();
 		System.out.println("Size of relations: " + size);
-		int start = 0;
-		for (start = 0; start+length < size;start = start + length) {
+		int start = 180000;
+		for (start = 180000; start+length < size;start = start + length) {
 			
 			List<RelationBean> list = dao.getRelats(start, length);
 			

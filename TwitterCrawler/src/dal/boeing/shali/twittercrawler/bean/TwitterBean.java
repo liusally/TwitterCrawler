@@ -45,8 +45,12 @@ public class TwitterBean {
 	private String profile_image_url;
 	@Column(name="metadata")
 	private String metadata;
+	//user cache
 	@Column(name="is_cached")
 	private Integer is_cached;
+	//reply cache
+	@Column(name="reply_cached")
+	private Integer reply_cached;
 	public String getText() {
 		return text;
 	}
@@ -142,6 +146,12 @@ public class TwitterBean {
 	}
 	public void setIs_cached(Integer is_cached) {
 		this.is_cached = is_cached;
+	}
+	public Integer getReply_cached() {
+		return reply_cached;
+	}
+	public void setReply_cached(Integer reply_cached) {
+		this.reply_cached = reply_cached;
 	}
 	
 }

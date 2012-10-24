@@ -1,6 +1,5 @@
 package dal.boeing.shali.twittercrawler.crawler;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.Iterator;
 
@@ -9,7 +8,7 @@ import twitter4j.ResponseList;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.User;
-import dal.boeing.shali.twittercrawler.bean.RelationBean;
+import dal.boeing.shali.twittercrawler.bean.RelatBean;
 import dal.boeing.shali.twittercrawler.bean.UserBean;
 import dal.boeing.shali.twittercrawler.database.TwitterDao;
 
@@ -78,17 +77,16 @@ public class UserCrawler extends Thread {
 			} while ((cursor = followers.getNextCursor()) != 0);
 			
 		} catch (TwitterException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			System.err.println(new Date().toLocaleString());
-			e.printStackTrace();
-			if (e.exceededRateLimitation())
+			if (e.exceededRateLimitation()) {
+				System.err.println("UserCrawler exceed rate limit!");
 				try {
 					Thread.sleep(500000);
 				} catch (InterruptedException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+			}
 		}
 	}
 	
@@ -151,7 +149,7 @@ public class UserCrawler extends Thread {
 			
 			dao.saveUser(bean);
 			System.out.println("[RELATION] : " + bean.getName() + " saved!");
-			RelationBean rbean = new RelationBean();
+			RelatBean rbean = new RelatBean();
 			rbean.setFrom_id(userId);
 			rbean.setTo_id(u.getId());
 			rbean.setType(type);
