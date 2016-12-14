@@ -5,9 +5,9 @@
 <hibernate-configuration>
     <session-factory>
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="hibernate.connection.url">jdbc:mysql://129.173.212.51/twitter_raw</property>
-        <property name="hibernate.connection.username">root</property>
-        <property name="hibernate.connection.password">sally</property>
+        <property name="hibernate.connection.url">jdbc:mysql://HOST/twitter_raw</property>
+        <property name="hibernate.connection.username">[user]</property>
+        <property name="hibernate.connection.password">[PSW]</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
     	<property name="connection.pool_size">1</property>
     	<property name="show_sql">false</property>
